@@ -10,7 +10,6 @@ class Solution {
             pq.add(scov);
         }
         
-        
         while(true){
             if(pq.isEmpty()){
                 answer = -1;
@@ -32,6 +31,7 @@ class Solution {
                 }
             }
         }
+        
         
         return answer;
     }
