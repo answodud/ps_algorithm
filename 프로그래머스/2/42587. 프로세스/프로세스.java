@@ -5,6 +5,7 @@ class Solution {
         int answer = 0;
         
         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        
         for(int prio : priorities){
             pq.add(prio);
         }
