@@ -1,30 +1,30 @@
 import java.util.*;
 
 class Solution {
-    
-    String[] str = {"A", "E", "I", "O", "U"};
+    String str = "AEIOU";
     ArrayList<String> list = new ArrayList<>();
     
     public int solution(String word) {
-        dfs(word, "");
         int answer = 0;
+        dfs("");
+        int i = 0;
         while(true){
-            if(list.get(answer).equals(word)){
+            if(list.get(i).equals(word)){
                 break;
             }
-            answer++;
+            i++;
         }
-        return answer;
         
+        return i + 1;
     }
     
-    public void dfs(String word, String cur){
-        if(cur.length() > 5){
+    public void dfs(String cur){
+        if(cur.length() >= 5){
             return;
         }
-        list.add(cur);
         for(int i = 0; i < 5; i++){
-            dfs(word, cur + str[i]);
+            list.add(cur + str.charAt(i));
+            dfs(cur + str.charAt(i));
         }
     }
 }
