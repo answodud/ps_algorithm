@@ -1,11 +1,13 @@
 import java.util.*;
 
 class Solution {
+    
     ArrayList<Integer>[] graph;
     public int solution(int n, int[][] wires) {
         
         graph = new ArrayList[n+1];
         int min = 100001;
+        
         for(int i = 1; i <= n; i++){
             graph[i] = new ArrayList<>();
         }
@@ -32,18 +34,21 @@ class Solution {
             graph[v2].add(v1);
         }
         
+        
         return min;
     }
     
     public int dfs(int v, boolean[] visited){
-        int cnt = 1;
         visited[v] = true;
+        int cnt = 1;
+        
         for(int next : graph[v]){
             if(!visited[next]){
                 visited[next] = true;
                 cnt += dfs(next, visited);
             }
         }
+        
         return cnt;
     }
 }
