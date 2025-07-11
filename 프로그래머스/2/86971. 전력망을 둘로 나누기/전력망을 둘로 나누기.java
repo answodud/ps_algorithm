@@ -3,9 +3,9 @@ import java.util.*;
 class Solution {
     ArrayList<Integer>[] graph;
     public int solution(int n, int[][] wires) {
-        int min = 1000001;
-        graph = new ArrayList[n+1];
         
+        graph = new ArrayList[n+1];
+        int min = 100001;
         for(int i = 1; i <= n; i++){
             graph[i] = new ArrayList<>();
         }
@@ -24,10 +24,9 @@ class Solution {
             graph[v2].remove(Integer.valueOf(v1));
             
             boolean[] visited = new boolean[n+1];
-            
             int cnt = dfs(1, visited);
             int diff = Math.abs(cnt - (n - cnt));
-            min = Math.min(diff, min);
+            min = Math.min(min, diff);
             
             graph[v1].add(v2);
             graph[v2].add(v1);
@@ -37,14 +36,14 @@ class Solution {
     }
     
     public int dfs(int v, boolean[] visited){
-        visited[v] = true;
         int cnt = 1;
+        visited[v] = true;
         for(int next : graph[v]){
             if(!visited[next]){
+                visited[next] = true;
                 cnt += dfs(next, visited);
             }
         }
-        
         return cnt;
     }
 }
