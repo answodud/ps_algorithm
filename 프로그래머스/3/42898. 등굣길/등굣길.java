@@ -11,14 +11,15 @@ class Solution {
                 if(i == 1 && j == 1){
                     continue;
                 }
-                boolean isPu = false;
+                
+                boolean p = false;
                 for(int[] pu : puddles){
                     if(pu[0] == i && pu[1] == j){
-                        isPu = true;
+                        p = true;
                     }
                 }
                 
-                if(isPu){
+                if(p){
                     dp[i][j] = 0;
                     continue;
                 }
@@ -27,9 +28,11 @@ class Solution {
                 if(i > 1){
                     way += dp[i - 1][j];
                 }
+                
                 if(j > 1){
                     way += dp[i][j - 1];
                 }
+                
                 dp[i][j] = way % 1000000007;
             }
         }
