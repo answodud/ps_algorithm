@@ -5,36 +5,32 @@ class Solution {
         int[][] dp = new int[m+1][n+1];
         
         dp[1][1] = 1;
-        boolean isPuddle = false;
+        
         for(int i = 1; i <= m; i++){
             for(int j = 1; j <= n; j++){
                 if(i == 1 && j == 1){
                     continue;
                 }
-                
-                isPuddle = false;
-                for(int[] puddle : puddles){
-                    if(puddle[0] == i && puddle[1] == j){
-                        isPuddle = true;
-                        continue;
+                boolean isPu = false;
+                for(int[] pu : puddles){
+                    if(pu[0] == i && pu[1] == j){
+                        isPu = true;
                     }
                 }
                 
-                if(isPuddle){
+                if(isPu){
                     dp[i][j] = 0;
                     continue;
                 }
                 
-                int ways = 0;
+                int way = 0;
                 if(i > 1){
-                    ways += dp[i - 1][j];
+                    way += dp[i - 1][j];
                 }
-                
                 if(j > 1){
-                    ways += dp[i][j - 1];
+                    way += dp[i][j - 1];
                 }
-                
-                dp[i][j] = ways % 1000000007;
+                dp[i][j] = way % 1000000007;
             }
         }
         
