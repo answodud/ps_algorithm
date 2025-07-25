@@ -11,6 +11,7 @@ class Solution {
                 if(i == 1 && j == 1){
                     continue;
                 }
+                
                 isPuddle = false;
                 for(int[] puddle : puddles){
                     if(puddle[0] == i && puddle[1] == j){
@@ -24,15 +25,16 @@ class Solution {
                     continue;
                 }
                 
-                int x = 0;
+                int ways = 0;
                 if(i > 1){
-                    x += dp[i - 1][j];
+                    ways += dp[i - 1][j];
                 }
-                if(j > 1){
-                    x += dp[i][j - 1];
-                }
-                dp[i][j] = x % 1000000007;
                 
+                if(j > 1){
+                    ways += dp[i][j - 1];
+                }
+                
+                dp[i][j] = ways % 1000000007;
             }
         }
         
