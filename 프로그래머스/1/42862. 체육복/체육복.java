@@ -8,15 +8,14 @@ class Solution {
         HashSet<Integer> reserveSet = new HashSet<>();
         ArrayList<Integer> list = new ArrayList<>();
         
-        for(int re : reserve){
-            reserveSet.add(re);
-            list.add(re);
+        for(int x : reserve){
+            reserveSet.add(x);
+            list.add(x);
         }
         
-        for(int lo : lost){
-            lostSet.add(lo);
+        for(int x : lost){
+            lostSet.add(x);
         }
-        
         
         for(int i = 0; i < lost.length; i++){
             if(reserveSet.contains(lost[i])){
@@ -27,17 +26,23 @@ class Solution {
         
         Collections.sort(list);
         
+        System.out.println(lostSet);
+            System.out.println(reserveSet);
+            System.out.println(list);
         for(int i = 0; i < list.size(); i++){
-            int p = list.get(i);
-            if(!reserveSet.contains(p)){
+            int x = list.get(i);
+            if(!reserveSet.contains(x)){
                 continue;
             }
-            if(lostSet.contains(p - 1)){
-                lostSet.remove(p - 1);
-                reserveSet.remove(p);
-            } else if(lostSet.contains(p + 1)){
-                lostSet.remove(p + 1);
-                reserveSet.remove(p);
+            
+            if(lostSet.contains(x - 1)){
+                lostSet.remove(x - 1);
+                reserveSet.remove(x);
+            }
+            
+            else if(lostSet.contains(x + 1)){
+                lostSet.remove(x + 1);
+                reserveSet.remove(x);
             }
         }
         
