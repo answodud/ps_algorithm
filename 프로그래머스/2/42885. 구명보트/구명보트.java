@@ -13,14 +13,13 @@ class Solution {
             if(left > right){
                 break;
             }
-            int sum = people[left] + people[right];
-            if(sum <= limit){
+            if(people[left] + people[right] <= limit){
+                answer++;
                 left++;
                 right--;
-                answer++;
             } else {
-                right--;
                 answer++;
+                right--;
             }
         }
         
