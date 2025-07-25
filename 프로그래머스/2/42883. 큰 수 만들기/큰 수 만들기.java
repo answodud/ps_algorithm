@@ -1,7 +1,6 @@
 class Solution {
     public String solution(String number, int k) {
         String answer = "";
-        
         StringBuilder sb = new StringBuilder();
         
         for(char c : number.toCharArray()){
@@ -13,7 +12,6 @@ class Solution {
         }
         
         answer = sb.substring(0, sb.length() - k);
-        
         return answer;
     }
 }
