@@ -10,6 +10,7 @@ class Solution {
         for(int i = 0; i < n; i++){
             graph[i] = new ArrayList<>();
         }
+        
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
                 if(computers[i][j] == 1){
@@ -30,11 +31,11 @@ class Solution {
     
     public void dfs(int start){
         visited[start] = true;
-            for(int next : graph[start]){
-                if(!visited[next]){
-                    visited[next] = true;
-                    dfs(next);
-                }
+        for(int next : graph[start]){
+            if(!visited[next]){
+                visited[next] = true;
+                dfs(next);
             }
+        }
     }
 }
