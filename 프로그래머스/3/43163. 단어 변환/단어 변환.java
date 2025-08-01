@@ -2,68 +2,53 @@ import java.util.*;
 
 class Solution {
     
-    class Word {
-        
-        String word;
+    class Word{
         int step;
+        String word;
         
-        Word(String word, int step){
-            this.word = word;
+        Word(int step, String word){
             this.step = step;
+            this.word = word;
         }
     }
     
+    boolean[] visited;
     public int solution(String begin, String target, String[] words) {
-        
         int answer = 0;
-        int answerIndex = -1;
-        
-        for(int i = 0; i < words.length; i++){
-            if(words[i].equals(target)){
-                answerIndex = i;
-            }
-        }
-        
-        answer = bfs(begin, target, words, answerIndex);
-
-        return answer;
-    }
-    
-    public int bfs(String begin, String target, String[] words, int answerIndex){
+        visited = new boolean[words.length];
         Queue<Word> q = new LinkedList<>();
-        q.offer(new Word(begin, 0));
-        boolean[] visited = new boolean[words.length];
+
+        q.offer(new Word(0, begin));
         
         while(!q.isEmpty()){
             Word cur = q.poll();
-            
             if(cur.word.equals(target)){
                 return cur.step;
             }
             
             for(int i = 0; i < words.length; i++){
-                if(!visited[i] && isOneDiff(words[i], cur.word)){
+                if(oneDiff(words[i], cur.word) && !visited[i]){
                     visited[i] = true;
-                    q.offer(new Word(words[i], cur.step + 1));
+                    q.offer(new Word(cur.step + 1, words[i]));
                 }
             }
         }
         
-        return 0;
+        
+        return answer;
     }
     
-    public boolean isOneDiff(String word, String target){
+    
+    public boolean oneDiff(String target, String word){
         int cnt = 0;
-        for(int i = 0; i < word.length();  i++){
-            if(word.charAt(i) != target.charAt(i)){
+        for(int i = 0; i < target.length(); i++){
+            if(target.charAt(i) != word.charAt(i)){
                 cnt++;
             }
             if(cnt > 1){
                 return false;
             }
         }
-        
         return true;
-        
     }
 }
