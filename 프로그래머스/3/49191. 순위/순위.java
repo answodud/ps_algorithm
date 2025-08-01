@@ -1,11 +1,10 @@
 class Solution {
-    
     public int solution(int n, int[][] results) {
         int answer = 0;
         boolean[][] graph = new boolean[n+1][n+1];
         
-        for(int[] result : results){
-            graph[result[0]][result[1]] = true;
+        for(int i = 0; i < results.length; i++){
+            graph[results[i][0]][results[i][1]] = true;
         }
         
         for(int k = 1; k <= n; k++){
@@ -19,13 +18,13 @@ class Solution {
         }
         
         for(int i = 1; i <= n; i++){
-            int know = 0;
+            int cnt = 0;
             for(int j = 1; j <= n; j++){
                 if(graph[i][j] || graph[j][i]){
-                    know++;
+                    cnt++;
                 }
             }
-            if (know == n - 1){
+            if(cnt == n - 1){
                 answer++;
             }
         }
