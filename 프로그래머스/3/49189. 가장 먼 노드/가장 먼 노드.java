@@ -12,9 +12,8 @@ class Solution {
             this.step = step;
         }
     }
-    
     public int solution(int n, int[][] edge) {
-        int answer = 0;
+
         graph = new ArrayList[n+1];
         visited = new boolean[n+1];
         for(int i = 0; i <= n; i++){
@@ -27,8 +26,6 @@ class Solution {
             graph[a].add(b);
             graph[b].add(a);
         }
-        
-        
         
         return bfs(1);
     }
@@ -43,14 +40,14 @@ class Solution {
         
         while(!q.isEmpty()){
             Node cur = q.poll();
-            
-            if(cur.step > maxStep){
+            if(maxStep < cur.step){
                 maxStep = cur.step;
                 count = 1;
-            } else if(cur.step == maxStep){
+            } else if(maxStep == cur.step){
                 count++;
             }
             
+            visited[cur.num] = true;
             for(int next : graph[cur.num]){
                 if(!visited[next]){
                     visited[next] = true;
