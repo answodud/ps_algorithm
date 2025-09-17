@@ -4,26 +4,28 @@ class Solution {
     public String solution(String[] participant, String[] completion) {
         String answer = "";
         
-        HashMap<String, Integer> map = new HashMap<>();
+        HashMap<String, Integer> part = new HashMap<>();
         
-        for(String name : participant){
-            if(map.getOrDefault(name, 0) == 0){
-                map.put(name, 1);
+        for(String person : participant){
+            if(part.getOrDefault(person, 0) != 0){
+                part.put(person, part.get(person) + 1);
             } else {
-                map.replace(name, map.get(name) + 1);
+                part.put(person, 1);
             }
         }
         
-        for(String name : completion){
-            map.replace(name, map.get(name) - 1);
-            if(map.get(name) == 0){
-                map.remove(name);
+        for(String person : completion){
+            if(part.getOrDefault(person, 0) != 0){
+                part.replace(person, part.get(person) - 1);
             }
         }
         
-        for(String str : map.keySet()){
-            answer += str;
+        for(Map.Entry<String, Integer> entrySet : part.entrySet()){
+            if(entrySet.getValue() != 0){
+                return entrySet.getKey();
+            }
         }
+        
         
         
         return answer;
