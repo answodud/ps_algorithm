@@ -7,28 +7,28 @@ class Solution {
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         
         for(int scov : scoville){
-            pq.add(scov);
+            pq.offer(scov);
         }
         
+        
         while(true){
-            if(pq.isEmpty()){
-                answer = -1;
-                break;
-            } else {
+            if(!pq.isEmpty()){
                 int one = pq.poll();
                 if(one >= K){
                     break;
-                } else {
-                    if(pq.isEmpty()){
-                        answer = -1;
-                        break;
-                    } else {
-                        int two = pq.poll();
-                        int shake = one + two * 2;
-                        answer += 1;
-                        pq.add(shake);
-                    }
                 }
+                if(!pq.isEmpty()){
+                    int two = pq.poll();
+                    int three = one + two*2;
+                    answer++;
+                    pq.offer(three);
+                } else {
+                    answer = -1;
+                    break;
+                }
+            } else {
+                answer = -1;
+                break;
             }
         }
         
