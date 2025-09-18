@@ -1,27 +1,26 @@
 import java.util.*;
+
 class Solution {
     public String solution(int[] numbers) {
         String answer = "";
-        String[] num = new String[numbers.length];
         
-        int zero_true = 1;
+        String[] str = new String[numbers.length];
+        boolean ok = false;
         for(int i = 0; i < numbers.length; i++){
+            str[i] = String.valueOf(numbers[i]);
             if(numbers[i] != 0){
-                zero_true = 0;
+                ok = true;
             }
-            num[i] = String.valueOf(numbers[i]);
+        }
+        Arrays.sort(str, (o1, o2) -> (o2+o1).compareTo(o1+o2));
+        
+        for(int i = 0; i < str.length; i++){
+            answer += str[i];
         }
         
-        Arrays.sort(num, (o1, o2) -> (o2+o1).compareTo(o1+o2));
-        
-        for(String s : num){
-            answer += s;
+        if(ok == false){
+            return "0";
         }
-        
-        if(zero_true == 1){
-            answer = "0";
-        }
-        
         return answer;
     }
 }
