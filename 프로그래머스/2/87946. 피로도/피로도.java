@@ -1,31 +1,37 @@
-import java.util.*;
-
 class Solution {
+    
+    int[][] dungeons;
     boolean[] visited;
-    int max = -1;
+    int max_cnt = 0;
+    
     public int solution(int k, int[][] dungeons) {
-        
+        int answer = -1;
+        this.dungeons = dungeons;
         visited = new boolean[dungeons.length];
-        dfs(dungeons, k, 0);
+        dfs(k, 0, 0);
         
-        return max;
+        return max_cnt;
     }
     
-    public void dfs(int[][] dungeons, int piro, int cnt){
-        if(cnt > dungeons.length){
+    public void dfs(int piro, int depth, int cnt){
+        if(depth >= dungeons.length){
+            if(cnt > max_cnt){
+                max_cnt = cnt;
+            }
             return;
         }
         for(int i = 0; i < dungeons.length; i++){
             if(!visited[i]){
-                if(dungeons[i][0] > piro){
-                    continue;
-                }
                 visited[i] = true;
-                dfs(dungeons, piro - dungeons[i][1], cnt + 1);
+                if(dungeons[i][0] <= piro){
+                    dfs(piro - dungeons[i][1], depth + 1, cnt + 1);
+                } else {
+                    dfs(piro, depth + 1, cnt);
+                }
                 visited[i] = false;
             }
-            
         }
-        max = Math.max(max, cnt);
     }
+    
+    
 }
