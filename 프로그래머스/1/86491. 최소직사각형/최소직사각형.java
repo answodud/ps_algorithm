@@ -6,25 +6,19 @@ class Solution {
         int max_y = 0;
         
         for(int[] size : sizes){
-            if(size[1] > size[0]){
-                if(size[1] > max_x){
-                    max_x = size[1];
-                }
-                if(size[0] > max_y){
-                    max_y = size[0];
-                }
+            int x = size[0];
+            int y = size[1];
+            
+            if(x > y){
+                max_x = Math.max(max_x, x);
+                max_y = Math.max(max_y, y);
             } else {
-                 if(size[0] > max_x){
-                    max_x = size[0];
-                }
-                if(size[1] > max_y){
-                    max_y = size[1];
-                }
+                max_x = Math.max(max_x, y);
+                max_y = Math.max(max_y, x);
             }
+            
         }
         
-        answer = max_x * max_y;
-        
-        return answer;
+        return max_x * max_y;
     }
 }
