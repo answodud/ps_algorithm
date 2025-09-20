@@ -1,29 +1,35 @@
-import java.util.*;
-
 class Solution {
     String str = "AEIOU";
-    ArrayList<String> list = new ArrayList<>();
+    String word;
+    int cnt = 0;
+    int answer = 0;
+    boolean found = false;
     
     public int solution(String word) {
-        int answer = 0;
+        this.word = word;
         dfs("");
-        int i = 0;
-        while(true){
-            if(list.get(i).equals(word)){
-                break;
-            }
-            i++;
-        }
-        
-        return i + 1;
+        return answer;
     }
     
     public void dfs(String cur){
-        if(cur.length() >= 5){
+        if(cur.length() > 0){
+            cnt++;
+            if(cur.equals(word)){
+                found = true;
+                answer = cnt;
+                return;
+            }
+        }
+        if(cur.length() >= 5 || found == true){
             return;
         }
+        
         for(int i = 0; i < 5; i++){
-            list.add(cur + str.charAt(i));
+            if(cur.equals(word)){
+                found = true;
+                answer = cnt;
+                return;
+            }
             dfs(cur + str.charAt(i));
         }
     }
