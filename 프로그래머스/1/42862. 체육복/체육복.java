@@ -4,50 +4,37 @@ class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
         int answer = 0;
         
-        HashSet<Integer> lostSet = new HashSet<>();
-        HashSet<Integer> reserveSet = new HashSet<>();
-        ArrayList<Integer> list = new ArrayList<>();
+        List<Integer> lostList = new ArrayList<>();
+        List<Integer> reserveList = new ArrayList<>();
         
-        for(int x : reserve){
-            reserveSet.add(x);
-            list.add(x);
+        for(int l : lost){
+            lostList.add(l);
         }
         
-        for(int x : lost){
-            lostSet.add(x);
-        }
-        
-        for(int i = 0; i < lost.length; i++){
-            if(reserveSet.contains(lost[i])){
-                reserveSet.remove(lost[i]);
-                lostSet.remove(lost[i]);
-            }
-        }
-        
-        Collections.sort(list);
-        
-        System.out.println(lostSet);
-            System.out.println(reserveSet);
-            System.out.println(list);
-        for(int i = 0; i < list.size(); i++){
-            int x = list.get(i);
-            if(!reserveSet.contains(x)){
+        for(int r : reserve){
+            if(lostList.contains(r)){
+                lostList.remove(Integer.valueOf(r));
                 continue;
             }
-            
-            if(lostSet.contains(x - 1)){
-                lostSet.remove(x - 1);
-                reserveSet.remove(x);
-            }
-            
-            else if(lostSet.contains(x + 1)){
-                lostSet.remove(x + 1);
-                reserveSet.remove(x);
+            reserveList.add(r);
+        }
+        
+        Arrays.sort(reserve);
+        
+        
+        for(int i = 0; i < reserve.length; i++){
+            if(reserveList.contains(reserve[i])){
+                if(lostList.contains(reserve[i] - 1)){
+                    reserveList.remove(Integer.valueOf(reserve[i]));
+                    lostList.remove(Integer.valueOf(reserve[i] - 1));
+                } else if(lostList.contains(reserve[i] + 1)){
+                    reserveList.remove(Integer.valueOf(reserve[i]));
+                    lostList.remove(Integer.valueOf(reserve[i] + 1));
+                }
             }
         }
         
-        answer = n - lostSet.size();
-        
-        return answer;
+        return n - lostList.size();
+
     }
 }
