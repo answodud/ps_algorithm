@@ -1,19 +1,29 @@
+import java.util.*;
+
 class Solution {
     public String solution(String number, int k) {
         String answer = "";
         
-        StringBuilder sb = new StringBuilder();
-        
+        Deque<Character> dq = new ArrayDeque<>();
         for(int i = 0; i < number.length(); i++){
             char c = number.charAt(i);
-            while(k > 0 && sb.length() > 0 && sb.charAt(sb.length() - 1) < c){
-                sb.deleteCharAt(sb.length() - 1);
+            while(!dq.isEmpty() && dq.peekLast() < c && k > 0){
+                dq.pollLast();
                 k--;
             }
-            sb.append(c);
+            dq.addLast(c);
         }
         
-        answer = sb.substring(0, sb.length() - k);
+        while(k > 0){
+            dq.pollLast();
+            k--;
+        }
+        
+        while(!dq.isEmpty()){
+            answer += String.valueOf(dq.pollFirst());
+        }
+        
+        
         return answer;
     }
 }
