@@ -5,8 +5,9 @@ class Solution {
         long answer = 0;
         
         Arrays.sort(times);
-        long left = 0;
-        long right = times[times.length - 1] * (long)n;
+        
+        long left = 0; // 최소 시간
+        long right = times[times.length - 1] * (long)n; // 최대 시간
         
         while(left <= right){
             long mid = (left + right) / 2;
@@ -14,6 +15,7 @@ class Solution {
             for(int time : times){
                 cnt += mid / time;
             }
+            
             if(cnt >= n){
                 right = mid - 1;
                 answer = mid;
