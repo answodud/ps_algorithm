@@ -1,19 +1,19 @@
 class Solution {
-    
     int[][] dungeons;
     boolean[] visited;
-    int max_cnt = 0;
+    int max_cnt = -1;
     
     public int solution(int k, int[][] dungeons) {
         int answer = -1;
         this.dungeons = dungeons;
         visited = new boolean[dungeons.length];
+        
         dfs(k, 0, 0);
         
         return max_cnt;
     }
     
-    public void dfs(int piro, int depth, int cnt){
+    public void dfs(int cur, int depth, int cnt){
         if(depth >= dungeons.length){
             if(cnt > max_cnt){
                 max_cnt = cnt;
@@ -23,15 +23,13 @@ class Solution {
         for(int i = 0; i < dungeons.length; i++){
             if(!visited[i]){
                 visited[i] = true;
-                if(dungeons[i][0] <= piro){
-                    dfs(piro - dungeons[i][1], depth + 1, cnt + 1);
+                if(dungeons[i][0] <= cur){
+                    dfs(cur - dungeons[i][1], depth + 1, cnt + 1);
                 } else {
-                    dfs(piro, depth + 1, cnt);
+                    dfs(cur, depth + 1, cnt);
                 }
                 visited[i] = false;
             }
         }
     }
-    
-    
 }
