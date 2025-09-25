@@ -1,61 +1,53 @@
 import java.util.*;
 
 class Solution {
+    
     ArrayList<Integer>[] graph;
-    boolean[] visited;
-    class Node {
-        int num;
-        int step;
-        
-        Node(int num, int step){
-            this.num = num;
-            this.step = step;
-        }
-    }
+    int[] dist;
+    
     public int solution(int n, int[][] edge) {
-
+        int answer = 0;
         graph = new ArrayList[n+1];
-        visited = new boolean[n+1];
-        for(int i = 0; i <= n; i++){
+        dist = new int[n+1];
+        Arrays.fill(dist, -1);
+        for(int i = 1; i <= n; i++){
             graph[i] = new ArrayList<>();
         }
-        
         for(int i = 0; i < edge.length; i++){
-            int a = edge[i][0];
-            int b = edge[i][1];
-            graph[a].add(b);
-            graph[b].add(a);
+            int v1 = edge[i][0];
+            int v2 = edge[i][1];
+            graph[v1].add(v2);
+            graph[v2].add(v1);
         }
         
-        return bfs(1);
+        bfs(1);
+        
+        int max_dist = 0;
+        for(int x : dist){
+            max_dist = Math.max(max_dist, x);
+        }
+        
+        for(int x : dist){
+            if(max_dist == x){
+                answer++;
+            }
+        }
+    
+        return answer;
     }
     
-    public int bfs(int start){
-        Queue<Node> q = new LinkedList<>();
-        q.offer(new Node(start, 0));
-        visited[start] = true;
-        
-        int maxStep = 0;
-        int count = 0;
-        
+    public void bfs(int start){
+        Queue<Integer> q = new LinkedList<>();
+        dist[start] = 0;
+        q.offer(start);
         while(!q.isEmpty()){
-            Node cur = q.poll();
-            if(maxStep < cur.step){
-                maxStep = cur.step;
-                count = 1;
-            } else if(maxStep == cur.step){
-                count++;
-            }
-            
-            visited[cur.num] = true;
-            for(int next : graph[cur.num]){
-                if(!visited[next]){
-                    visited[next] = true;
-                    q.offer(new Node(next, cur.step + 1));
+            int cur = q.poll();
+            for(int next : graph[cur]){
+                if(dist[next] == -1){
+                    dist[next] = dist[cur] + 1;
+                    q.offer(next);
                 }
             }
         }
-        
-        return count;
     }
 }
