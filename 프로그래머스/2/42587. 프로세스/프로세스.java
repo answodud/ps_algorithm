@@ -15,7 +15,8 @@ class Solution {
                 if(pq.peek() == priorities[i]){
                     pq.poll();
                     answer++;
-                    if(location == i){
+                    
+                    if(i == location){
                         return answer;
                     }
                 }
