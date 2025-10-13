@@ -1,39 +1,31 @@
 class Solution {
-    int[] diffs;
-    int[] times;
-    
-    public long solution(int[] diffs, int[] times, long limit) {
-        long answer = 0;
-        this.diffs = diffs;
-        this.times = times;
-        long left = 1;
-        long right = 100000;
+    public int solution(int[] diffs, int[] times, long limit) {
+        int answer = 0;
+        
+        // 숙련도를 기준으로 이분탐색
+        int left = 1;
+        int right = 100000;
+        
         while(left <= right){
-            long mid = (left + right) / 2;
-            long t = game(mid);
-            if(t > limit){
+            int mid = (left + right) / 2; // 현재 숙련도
+            long time = times[0];
+            for(int i = 1; i < diffs.length; i++){
+                if(diffs[i] <= mid){
+                    time += times[i];
+                } else {
+                    time += (times[i - 1] + times[i]) * (diffs[i] - mid) + times[i]; 
+                }
+            }
+            
+            // 걸린 시간이 limit보다 크면
+            if(time > limit){
                 left = mid + 1;
-            } else {
-                answer = mid;
+            } else { // 걸린 시간이 limit보다 작거나 같으면
                 right = mid - 1;
+                answer = mid;
             }
         }
         
         return answer;
-    }
-    
-    public long game(long level){
-            long t = times[0]; // 현재 시간
-            int cur = 1; // 현재 풀고 있는 퍼즐 번호
-            while(cur < diffs.length){
-                if(diffs[cur] <= level){
-                    t += (long)(times[cur]);
-                    cur++;
-                } else {
-                    t += (long)((long)(diffs[cur]) - (long)(level)) * (long)((long)(times[cur - 1]) + (long)(times[cur])) + (long)(times[cur]);
-                    cur++;
-                }
-            }
-            return t;
     }
 }
