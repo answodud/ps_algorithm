@@ -2,59 +2,48 @@ import java.util.*;
 
 class Solution {
     
-    int[] dx = {-1, 1, 0, 0};
-    int[] dy = {0, 0, -1, 1};
+    int[] dx = {-1,1,0,0};
+    int[] dy = {0,0,-1,1};
     int[][] maps;
-    int N, M;
-    boolean visited[][];
-    
-    class Map {
-        int x;
-        int y;
-        Map(int x, int y){
-            this.x = x;
-            this.y = y;
-        }
-    }
+    boolean[][] visited;
+    int n, m;
     
     public int solution(int[][] maps) {
-        int answer = 0;
         this.maps = maps;
-        N = maps.length;
-        M = maps[0].length;
-        visited = new boolean[N][M];
+        n = maps.length;
+        m = maps[0].length;
+        visited = new boolean[n][m];
         
         bfs(0, 0);
         
-        if(!visited[N-1][M-1]){
+        if(!visited[n - 1][m - 1]){
             return -1;
         }
         
-        return maps[N-1][M-1];
+        return maps[n - 1][m - 1];
     }
     
     public void bfs(int x, int y){
-        Queue<Map> q = new LinkedList<>();
-        q.offer(new Map(x, y));
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{x, y});
         visited[x][y] = true;
         
         while(!q.isEmpty()){
-            Map cur = q.poll();
+            int[] cur = q.poll();
+            int cx = cur[0];
+            int cy = cur[1];
             for(int i = 0; i < 4; i++){
-                for(int j = 0; j < 4; j++){
-                    int nx = cur.x + dx[i];
-                    int ny = cur.y + dy[i];
-                    if(nx >= 0 && ny >= 0 && nx < N && ny < M){
-                        if(!visited[nx][ny] && maps[nx][ny] != 0){
-                            maps[nx][ny] = maps[cur.x][cur.y] + 1;
-                            q.offer(new Map(nx, ny));
-                            visited[nx][ny] = true;
-                        }
+                int nx = cx + dx[i];
+                int ny = cy + dy[i];
+                if(nx >= 0 && ny >= 0 && nx < n && ny < m){
+                    if(!visited[nx][ny] && maps[nx][ny] != 0){
+                        visited[nx][ny] = true;
+                        maps[nx][ny] = maps[cx][cy] + 1;
+                        q.offer(new int[]{nx,ny});
                     }
                 }
             }
         }
         
     }
-    
 }
